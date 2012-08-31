@@ -1,0 +1,10 @@
+model{
+  for (i in 1:n) { 
+    y[i] ~ dnorm(mu[i], precision);
+    mu[i] <- x[i] * slope + intercept;
+  }
+  slope ~ dnorm(0,.01);
+  intercept ~ dnorm(0,.01);
+  precision <- pow(conditional.sd, -2);
+  conditional.sd ~ dexp(.01)  # mean of prior = 100
+}

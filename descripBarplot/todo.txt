@@ -1,0 +1,2 @@
+- Vary spacing of shading lines in addition to roraring the angle.
+- Increase size of text for "Overall" and variable names relative to variable values. 
