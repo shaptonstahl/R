@@ -8,9 +8,9 @@
 # 
 # I add the following lines to the top of each script (below name, author):
 #####  Awesome decrufting  #####
-if( !("devtools" %in% installed.packages()[,"Package"] ) ) install.packages("devtools")
-library(devtools)
-source_url("https://raw.github.com/shaptonstahl/R/master/Decruft/Decruft.R")
+# if( !("devtools" %in% installed.packages()[,"Package"] ) ) install.packages("devtools")
+# library(devtools)
+# source_url("https://raw.github.com/shaptonstahl/R/master/Decruft/Decruft.R")
 # end decrufting
 
 cat("\nDecruft by Stephen Haptonstahl (srh@haptonstahl.org)\n\n")
