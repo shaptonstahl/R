@@ -6,7 +6,7 @@
 # Call with:
 #   source("http://www.haptonstahl.org/R/Decruft/Decruft.R")
 
-cat("\n\nDecruft by Stephen Haptonstahl (srh@haptonstahl.org)\n\n")
+cat("\nDecruft by Stephen Haptonstahl (srh@haptonstahl.org)\n\n")
 rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* objects including visible and hidden environments
 
 max.fails <- 500
@@ -33,4 +33,4 @@ if(fail.counter >= max.fails) {
 }
 
 rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* objects including visible and hidden environments
-cat("All objects deleted, including hidden package environments.")
+cat("All objects deleted, including hidden package environments.\n")
