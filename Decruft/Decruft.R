@@ -1,19 +1,12 @@
 # deCruft
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
 #
-# After installing and loading 'devtools', load using
-#   source_url("https://raw.github.com/shaptonstahl/R/master/Decruft/Decruft.R")
-# or install using 'source' if you download it and keep it handy.
-# 
-# I add the following lines to the top of each script (below name, author):
-#####  Awesome decrufting  #####
-# if( !("devtools" %in% installed.packages()[,"Package"] ) ) install.packages("devtools")
-# library(devtools)
-# source_url("https://raw.github.com/shaptonstahl/R/master/Decruft/Decruft.R")
-# end decrufting
+# Call with:
+#   source("http://www.haptonstahl.org/R/Decruft/Decruft.R")
 
-cat("\nDecruft by Stephen Haptonstahl (srh@haptonstahl.org)\n\n")
+cat("\n\nDecruft by Stephen Haptonstahl (srh@haptonstahl.org)\n\n")
 rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* objects including visible and hidden environments
 
 max.fails <- 500
