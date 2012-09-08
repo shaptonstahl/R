@@ -1,4 +1,4 @@
-# deCruft
+# Decruft
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
 # Source: https://raw.github.com/shaptonstahl/R
