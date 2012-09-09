@@ -1,7 +1,10 @@
 # insertColumn
-# 
+#
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/insertColumn/insertColumn.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/insertColumn/insertColumn.R")
 
 insertColumn <- function(X, new.col.name, after.column=ncol(X), default=NA) {
   # Adds columns in the middle of a data frame
@@ -16,7 +19,7 @@ insertColumn <- function(X, new.col.name, after.column=ncol(X), default=NA) {
   # Returns a data.frame with old and new columns
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/insertColumn/insertColumn.R")
+  # Load using: source("http://www.haptonstahl.org/R/insertColumn/insertColumn.R")
   
   n.new.cols <- length(new.col.name)
   n.original.cols <- ncol(X)

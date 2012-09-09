@@ -1,7 +1,14 @@
 # Establish cosponsorship
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/cosponsors/cosponsors.R")
 
-source("http://sheer.ucdavis.edu/svn/software/public/guid/guid.R")
-source("http://sheer.ucdavis.edu/svn/software/public/insertColumn/insertColumn.R")
+source("http://www.haptonstahl.org/R/guid/guid.R")
+source("http://www.haptonstahl.org/R/insertColumn/insertColumn.R")
+
 
 ##   Generate fake data  ##
 n.legislators <- 100

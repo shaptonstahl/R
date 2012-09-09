@@ -1,7 +1,13 @@
 # BUGS functions
 # These should be added to diplot eventually.
-# Load using:  source("http://sheer.ucdavis.edu/svn/software/public/BugsFunctions/BugsFunctions.R")
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/BugsFunctions/BugsFunctions.R")
 
+# Function list
 # as.index: 
 # CheckForNonconvergence: 
 # ExtractCodaDraws: 

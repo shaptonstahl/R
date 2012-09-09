@@ -1,7 +1,10 @@
 # Use RCurl to upload an RData file containing specific R objects
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/postObjects/postObjects.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/postObjects/postObjects.R")
 
 postObjects <- function(filename, save.to.URL, post.params=list(), ...) {
   # Post an RData file and some parameters to URL containing the objects listed in ...
@@ -9,7 +12,7 @@ postObjects <- function(filename, save.to.URL, post.params=list(), ...) {
   # post.params should be a named list of key-value pairs to be POSTed.
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/postObjects/postObjects.R")
+  # Load using: source("http://www.haptonstahl.org/R/postObjects/postObjects.R")
   library(RCurl)
   temp.file.name <- tempfile()
   save(..., file=temp.file.name)

@@ -1,7 +1,10 @@
 # descripBarplot
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/descripBarplot/descripBarplot.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/descripBarplot/descripBarplot.R")
 
 descripBarplot <- function(X, 
   yName, 

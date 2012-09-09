@@ -1,7 +1,10 @@
 # Save a matrix as a java-formatted two-dimensional array
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using:  source("http://sheer.ucdavis.edu/svn/software/public/MatrixToJava/MatrixToJava.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/MatrixToJava/MatrixToJava.R")
 
 MatrixToJava <- function(X, file=file.choose(), java.matrix.name="final double X[][]") {
   # Given a matrix 'X', creates a text file 'file' containing Java code 

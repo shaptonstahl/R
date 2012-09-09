@@ -1,7 +1,12 @@
 # linePlotModels
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/linePlotModels/linePlotModels.R")
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/linePlotModels/linePlotModels.R")
 
-source("http://sheer.ucdavis.edu/svn/software/public/RoundNicely/RoundNicely.R")
+source("http://www.haptonstahl.org/R/RoundNicely/RoundNicely.R")
 
 linePlotModels <- function(X,
   orderShown, fancyVarNames,
@@ -25,7 +30,7 @@ linePlotModels <- function(X,
   # Mean and +/- 1 standard deviation can be graphed instead.
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/linePlotModels/linePlotModels.R")
+  # Load using: source("http://www.haptonstahl.org/R/linePlotModels/linePlotModels.R")
   
   ##############
   ###  PREP  ###

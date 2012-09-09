@@ -1,7 +1,10 @@
 # colorSequence: a function for generating a palette ranging between two colors
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/colorSequence/colorSequence.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/colorSequence/colorSequence.R")
 
 colorSequence <- function(col1, col2, length.out=2) {
   # Generate a palette ranging between two colors

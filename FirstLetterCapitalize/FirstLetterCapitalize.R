@@ -1,4 +1,10 @@
 # FirstLetterCapitalize
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/FirstLetterCapitalize/FirstLetterCapitalizet.R")
 
 FirstLetterCapitalize <- function(x, 
                                   lower.except.inner=c("a", "an", "the", 

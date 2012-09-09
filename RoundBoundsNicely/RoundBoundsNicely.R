@@ -1,11 +1,14 @@
 # RoundNicely and RoundBoundsNicely
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/RoundBoundsNicely/RoundBoundsNicely.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/RoundBoundsNicely/RoundBoundsNicely.R")
 
 RoundNicely <- function(x, down=FALSE) {
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/RoundBoundsNicely/RoundBoundsNicely.R")
+  # Load using: source("http://www.haptonstahl.org/R/RoundBoundsNicely/RoundBoundsNicely.R")
   if(length(x) > 1) {
     return(sapply(x, function(v) roundNicely(v, down)))
   } else {
@@ -26,7 +29,7 @@ RoundNicely <- function(x, down=FALSE) {
 
 RoundBoundsNicely <- function(x) {
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/RoundBoundsNicely/RoundBoundsNicely.R")
+  # Load using: source("http://www.haptonstahl.org/R/RoundBoundsNicely/RoundBoundsNicely.R")
   
   # Given a length=2 vector, return slightly larger but nicer bounds.
   
@@ -36,7 +39,7 @@ RoundBoundsNicely <- function(x) {
 
 RoundDrawsNicely <- function(x) {
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/RoundBoundsNicely/RoundBoundsNicely.R")
+  # Load using: source("http://www.haptonstahl.org/R/RoundBoundsNicely/RoundBoundsNicely.R")
   
   # Given something numeric, calculate the range, then round the bounds nicely to a 
   # range slightly larger.

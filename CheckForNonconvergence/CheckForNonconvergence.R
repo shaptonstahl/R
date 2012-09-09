@@ -1,7 +1,10 @@
 # Check for non-convergence
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/CheckForNonconvergence/CheckForNonconvergence.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/CheckForNonconvergence/CheckForNonconvergence.R")
 
 source("http://sheer.ucdavis.edu/svn/software/public/Prompts/Prompts.R")
 

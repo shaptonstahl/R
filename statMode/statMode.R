@@ -1,16 +1,19 @@
 # statMode: Calculate the most commonly occuring value
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/statMode/statMode.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/statMode/statMode.R")
 
-source("http://sheer.ucdavis.edu/svn/software/public/usePackage/usePackage.R")
+source("http://www.haptonstahl.org/R/usePackage/usePackage.R")
 usePackage("nnet")
 
 statMode <- function(x, break.ties.randomly=F) {
   # Calculate the most commonly occuring value
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/statMode/statMode.R")
+  # Load using: source("http://www.haptonstahl.org/R/statMode/statMode.R")
   tx <- table(x)
   if(break.ties.randomly) {
     out <- row.names(tx)[which.is.max(tx)]

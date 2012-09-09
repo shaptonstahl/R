@@ -1,5 +1,10 @@
 # Bayesian Information Criterion for various R classes
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/BayesianInformationCriterion/BayesianInformationCriterion.R")
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/BayesianInformationCriterion/BayesianInformationCriterion.R")
 
 AkaikeInformationCriterion <- function(obj) {
   if( "zeroinfl" %in% class(obj)) {

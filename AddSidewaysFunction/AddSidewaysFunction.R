@@ -1,4 +1,10 @@
 # AddSidewaysFunction
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/AddSidewaysFunction/AddSidewaysFunction.R")
 
 AddSidewaysFunction <- function(f, origin, ylim, max.width, left=FALSE, axis=FALSE, ...) {
   # Plot 'f' sideways with origin at 'origin' over the range 'ylim'.

@@ -1,7 +1,10 @@
 # nderiv: numerically differentiate a function at a point
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/nderiv/nderiv.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/nderiv/nderiv.R")
 
 nderiv <- function(a, f, pm=.01, ...) {
   # Evaluates the approximate gradient of a function 'f' at a point 'a'.
@@ -9,7 +12,7 @@ nderiv <- function(a, f, pm=.01, ...) {
   # Other arguments can be passed to 'f' in the '...'.
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/nderiv/nderiv.R")
+  # Load using: source("http://www.haptonstahl.org/R/nderiv/nderiv.R")
   return( (f(a + pm) - f(a - pm)) / (2 * pm) )
 }
 
@@ -22,7 +25,7 @@ ngrad <- function(a, f, pm=.01, ...) {
   # Other arguments can be passed to 'f' in the '...'.
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/nderiv/nderiv.R")
+  # Load using: source("http://www.haptonstahl.org/R/nderiv/nderiv.R")
   sapply(1:length(a), function(i) {
     a.plus <- a.minus <- a
     a.plus[i] <- a.plus[i] + pm

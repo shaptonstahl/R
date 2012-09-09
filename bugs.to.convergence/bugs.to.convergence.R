@@ -1,7 +1,10 @@
 # bugs.to.convergence
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/bugs.to.convergence/bugs.to.convergence.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/bugs.to.convergence/bugs.to.convergence.R")
 
 # Function list:
 # - bugs.to.convergence: 

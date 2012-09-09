@@ -2,7 +2,10 @@
 # R package to solve sudoku games
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/srhSudoku/srhSudoku.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/srhSudoku/srhSudoku.R")
 
 setClass(Class="sudoku", 
   representation=representation(

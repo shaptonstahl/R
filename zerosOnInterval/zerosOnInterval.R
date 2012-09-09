@@ -2,7 +2,10 @@
 # Try to find all of the zeros of a function on a bounded interval
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Load using: source("http://sheer.ucdavis.edu/svn/software/public/zerosOnInterval/zerosOnInterval.R")
+# Source: https://raw.github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/zerosOnInterval/zerosOnInterval.R")
 
 zerosOnInterval <- function(f, 
   lower=0, upper=1,
@@ -24,7 +27,7 @@ zerosOnInterval <- function(f,
   # If no zeros are found, returns numeric(0).
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/zerosOnInterval/zerosOnInterval.R")
+  # Load using: source("http://www.haptonstahl.org/R/zerosOnInterval/zerosOnInterval.R")
   
   # Trap errors
   if(upper <= lower) stop("'upper' must be greater than 'lower'.")
