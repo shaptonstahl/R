@@ -47,7 +47,7 @@ descripBarplot <- function(X,
   # barCols:            vector of colors; if set, barFill is automatically set to "color"
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/descripBarplot/descripBarplot.R")
+  # Load using: source("http://www.haptonstahl.org/R/descripBarplot/descripBarplot.R")
   
   # Error checking
   X <- as.data.frame(X)

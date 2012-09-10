@@ -1,6 +1,6 @@
 # descripBarplot Samples
 
-source("http://sheer.ucdavis.edu/svn/software/public/descripBarplot/descripBarplot.R")
+source("http://www.haptonstahl.org/R/descripBarplot/descripBarplot.R")
 
 # sample data
 n <- 200

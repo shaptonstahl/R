@@ -1,7 +1,7 @@
 # Copy of code posted at 
 # http://www.nicebread.de/visually-weighted-watercolor-plots-new-variants-please-vote/
 #
-# Load using: source("http://www.haptonstahl.org/R/watercolor/watercolor.R
+# Load using: source("http://www.haptonstahl.org/R/watercolor/watercolor.R")
 # 
 # (c) 2012 Felix Schönbrodt
 # This program is free software: you can redistribute it and/or modify
