@@ -5,9 +5,9 @@
 #' A longer description of the function.  This can be perhaps
 #' a paragraph, perhaps more than one.
 #' 
-#' @param arg1 Object type, then descrioption of \code{arg1}.
-#' @param arg2 Object type, then descrioption of \code{arg2}.
-#' @param arg3 Object type, then descrioption of \code{arg3}.
+#' @param arg1 Object type, then description of \code{arg1}.
+#' @param arg2 Object type, then description of \code{arg2}.
+#' @param arg3 Object type, then description of \code{arg3}.
 #' @return Object type, then description
 #' @export
 #' @seealso \code{\link{Related function}}
