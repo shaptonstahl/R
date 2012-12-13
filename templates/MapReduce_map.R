@@ -14,7 +14,7 @@ while( length(line.in <- readLines(con=f, n=1)) > 0 ) {
   
   words <- unlist(strsplit(line.in, split=" "))
   
-  for(word in words) cat(word, "1\n")
+  for(word in words) cat(word, "1\n", sep="\t")
 }
 
 close(f)

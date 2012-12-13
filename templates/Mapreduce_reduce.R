@@ -14,7 +14,7 @@ while( length(line.in <- readLines(con=f, n=1)) > 0 ) {
   if( nchar(line.in) == 0 ) next
   pars.in <- as.numeric(unlist(strsplit(line.in, split="\t")))
   key <- pars.in[1]
-  if( identical(key, current.key) ) {
+  if( !identical(key, current.key) ) {
     cat(current.key, "\t", value, "\n")
     value <- 0
     current.key <- key
