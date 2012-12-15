@@ -1,5 +1,3 @@
-# Template for a new function
-
 #' Short description of the function
 #'
 #' A longer description of the function.  This can be perhaps
