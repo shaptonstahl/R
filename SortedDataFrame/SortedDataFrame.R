@@ -6,6 +6,8 @@
 # Call with:
 #   source("http://www.haptonstahl.org/R/SortedDataFrame/SortedDataFrame.R")
 
+source("http://www.haptonstahl.org/R/unfactorColumns/unfactorColumns.R")
+
 #####  SortedDataFrame  #####
 #' Sort the rows of a data.frame
 #' 
@@ -45,6 +47,7 @@ SortedDataFrame <- function(X,
   )
   
   # deal with default and missing values
+  X <- unfactorColumns(X)
   if( missing(column.names) ) {
     column.indices <- unique(column.indices)
     column.indices <- column.indices[column.indices %in% 1:ncol(X)]
@@ -54,7 +57,7 @@ SortedDataFrame <- function(X,
     column.indices <- sapply(column.names, function(this.name) which(this.name == colnames(X)))
   }
   # perform the function
-  out <- X[do.call(order, lapply(column.indices, function(this.i) X[,this.i])),]
+  out <- X[do.call(order, sapply(column.indices, function(this.i) X[,this.i], simplify=FALSE)),]
   
   # prepare and return the output
   return(out)
