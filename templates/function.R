@@ -24,9 +24,9 @@ Function <- function(arg1,
                      arg2,
                      arg3=arg1) {
   # Guardians
-  stopifnot(class(arg1) == "this" && length(arg1) == 1 && arg1 >= 0 && arg1 <= 1,
-            class(arg2) == "that",
-            class(arg3) == "this"
+  stopifnot(is(arg1, "this") && length(arg1) == 1 && arg1 >= 0 && arg1 <= 1,
+            is(arg2, "that"),
+            is(arg3, "this")
     )
   
   # deal with default and missing values
