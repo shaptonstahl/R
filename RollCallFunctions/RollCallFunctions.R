@@ -1,29 +1,34 @@
-# Functions to manipulate roll call data
-#
-# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Source: https://raw.github.com/shaptonstahl/R
-#
-# Call with:
-#   source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+#' Functions to manipulate roll call data
+#'
+#' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+#' Source: https://raw.github.com/shaptonstahl/R
+#'
+#' Call with:
+#'   source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
 
-# AgreementScores: Given m x n matrix of m legislators and n roll call votes, returns m x m symetric matrix with fraction of votes on which ij^th legislators agree
-# DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call votes, returns m x m symetric matrix with double-centered distances
-# InitializeIdeals: Generate inits for ideal point estimation
-# RollCallEigen: 
+#' AgreementScores: Given m x n matrix of m legislators and n roll call votes, 
+#'   returns m x m symetric matrix with fraction of votes on which 
+#'   ij^th legislators agree.
+#' ChangeIdentification: Given a vector of ideal points identified with 
+#'   old.pegs, convert to a vector of ideal points identified with new.pegs.
+#' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
+#'   votes, returns m x m symetric matrix with double-centered distances.
+#' InitializeIdeals: Given an object of class rollcall(pscl) return good 
+#'   initial estimates for the ideal points and bill parameters
+#' RollCallEigen: Given a rollcall  object return the relevant eigenvalues.
 
-# ChangeIdentification: Given a vector of ideal points identified with old.pegs, convert to a vector of ideal points identified with new.pegs
-
-source("http://www.haptonstahl.org/R/usePackage/usePackage.R")    # like 'library' except that it first installs the package if necessary
+source("http://www.haptonstahl.org/R/usePackage/usePackage.R")    #' like 'library' except that it first installs the package if necessary
 UsePackage("pscl")
 
 AgreementScores <- function(votes) {
-  # Given m x n matrix of m legislators and n roll call votes,
-  # returns m x m symetric matrix with fraction of votes on which ij^th legislators agree
-  #
-  # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  #' Given m x n matrix of m legislators and n roll call votes,
+  #' returns m x m symetric matrix with fraction of votes on which 
+  #' ij^th legislators agree.
+  #'
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   
-  # recode, identifying vote codes by group
+  #' recode, identifying vote codes by group
   votes[votes==2] <- 1
   votes[votes==3] <- 1
   votes[votes==5] <- 4
@@ -31,10 +36,10 @@ AgreementScores <- function(votes) {
   votes[votes==8] <- 7
   votes[votes==9] <- 7
   
-  # initialize output
+  #' initialize output
   out <- diag(1, nrow(votes))
   
-  # generate bottom half, copy to top half
+  #' generate bottom half, copy to top half
   for(i in 2:nrow(votes)) {
     for(j in 1:(i-1)) {
       out[i,j] <- mean(votes[i,]==votes[j,])
@@ -45,22 +50,22 @@ AgreementScores <- function(votes) {
 }
 
 ChangeIdentification <- function(x, old.pegs, new.pegs) {
-  # Given a vector or matrix of 1-d ideal points identified with old.pegs, 
-  # convert to a vector or matrix of ideal points identified with new.pegs.
-  #
-  #  ex: rescaled.ideals <- ChangeIdentification(ideals, c(-1,1), c(-2,2))
-  #
-  # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  #' Given a vector or matrix of 1-d ideal points identified with old.pegs, 
+  #' convert to a vector or matrix of ideal points identified with new.pegs.
+  #'
+  #'  ex: rescaled.ideals <- ChangeIdentification(ideals, c(-1,1), c(-2,2))
+  #'
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   return( (x - old.pegs[1]) / (old.pegs[2] - old.pegs[1]) * (new.pegs[2] - new.pegs[1]) + new.pegs[1] )
 }
 
 DoubleCenterSqrdDist <- function(votes) {
-  # Given m x n matrix of m legislators and n roll call votes,
-  # returns m x m symetric matrix with double-centered distances
-  #
-  # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  #' Given m x n matrix of m legislators and n roll call votes,
+  #' returns m x m symetric matrix with double-centered distances
+  #'
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   work <- AgreementScores(votes)
   work <- (1 - work)^2
   out <- sweep(work, 1, rowMeans(work))
@@ -70,17 +75,17 @@ DoubleCenterSqrdDist <- function(votes) {
 }
 
 InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1)), diag(d)), d=1, lop=.005) {
-  # Given an object of class rollcall(pscl) return good initial 
-  # estimates for the ideal points and bill parameters
-  # 
-  # 'anchors' is a length = d+1 integer vector of indices of the 
-  # legislators whose ideal points will be fixed for identification.
-  # 
-  # anchor.values is a d x (d+1) matrix of whose columns are the 
-  # images of the ideal points specified by 'anchors'.
-  #
-  # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  #' Given an object of class rollcall(pscl) return good initial 
+  #' estimates for the ideal points and bill parameters
+  #' 
+  #' 'anchors' is a length = d+1 integer vector of indices of the 
+  #' legislators whose ideal points will be fixed for identification.
+  #' 
+  #' anchor.values is a d x (d+1) matrix of whose columns are the 
+  #' images of the ideal points specified by 'anchors'.
+  #'
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   
   if( class(rc) != "rollcall" ) stop("Object 'rc' must be of class rollcall(pscl).")
   if( !missing(anchors) && length(anchors) != d+1 ) stop("Exactly d+1 legislators' ideal points must be specified for identification.")
@@ -111,9 +116,9 @@ InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1))
     scaled.x <- t(scaled.x)
   }
   
-  # Now we have the initial estimates of the ideal points.
-  # Initial estimates of the bill parameters come from a sequence
-  # of probits.
+  #' Now we have the initial estimates of the ideal points.
+  #' Initial estimates of the bill parameters come from a sequence
+  #' of probits.
   y <- matrix(ifelse(purged.rc$votes %in% purged.rc$codes$yea, 1, ifelse(purged.rc$votes %in% purged.rc$codes$nay, 0, NA)), nrow=purged.rc$n)
   bill.params <- apply(y, 2, function(this.y) {
     glm.result <- glm(this.y ~ ., family=binomial(link="probit"), data=data.frame(scaled.x))
@@ -127,11 +132,13 @@ InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1))
   
   return( list(ideal.points=scaled.x, bill.params=bill.params) )
 }
-# res <- InitializeIdeals(rc); res
+#' res <- InitializeIdeals(rc); res
 
 RollCallEigen <- function(rc, lop=0.005) {
-  # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  #' Given a rollcall  object return the relevant eigenvalues.
+  #' 
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   purged.rc <- dropRollCall(rc, dropList=list(lop=ceiling(rc$n * lop)))
   eigen(DoubleCenterSqrdDist(purged.rc$votes))$values
 }
