@@ -13,6 +13,9 @@
 #'   old.pegs, convert to a vector of ideal points identified with new.pegs.
 #' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
 #'   votes, returns m x m symetric matrix with double-centered distances.
+#' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
+#'   list of legislator ids return the results having dropped the listed
+#'   legislators. Used to remove legislators inserted to force identification.
 #' InitializeIdeals: Given an object of class rollcall(pscl) return good 
 #'   initial estimates for the ideal points and bill parameters
 #' RollCallEigen: Given a rollcall  object return the relevant eigenvalues.
@@ -73,6 +76,24 @@ DoubleCenterSqrdDist <- function(votes) {
   out <- sweep(out, c(1,2), -mean(work))
   return(out / -2)
 }
+
+DropIdealLegislator <- function(rc, legs.to.drop) {
+  #' Given the results of a call to 'pscl::ideal' and a 
+  #' list of legislator ids return the results having dropped the listed
+  #' legislators. Used to remove legislators inserted to force identification.
+  
+  # Clean up list of legislators to drop
+  legs.to.drop <- legs.to.drop[legs.to.drop > 0 & legs.to.drop <= rc$n]
+  legs.to.drop <- sort(unique(legs.to.drop))
+  n.legs.to.drop <- length(legs.to.drop)
+  
+  out <- rc
+  out$votes <- out$votes[-legs.to.drop,]
+  out$n <- out$n - n.legs.to.drop
+  
+  return( out )
+}
+  
 
 InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1)), diag(d)), d=1, lop=.005) {
   #' Given an object of class rollcall(pscl) return good initial 
