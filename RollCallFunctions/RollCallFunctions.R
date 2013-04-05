@@ -77,19 +77,20 @@ DoubleCenterSqrdDist <- function(votes) {
   return(out / -2)
 }
 
-DropIdealLegislator <- function(rc, legs.to.drop) {
+DropIdealLegislator <- function(ideal.output, legs.to.drop) {
   #' Given the results of a call to 'pscl::ideal' and a 
   #' list of legislator ids return the results having dropped the listed
   #' legislators. Used to remove legislators inserted to force identification.
   
   # Clean up list of legislators to drop
-  legs.to.drop <- legs.to.drop[legs.to.drop > 0 & legs.to.drop <= rc$n]
+  legs.to.drop <- legs.to.drop[legs.to.drop > 0 & legs.to.drop <= ideal.output$n]
   legs.to.drop <- sort(unique(legs.to.drop))
   n.legs.to.drop <- length(legs.to.drop)
   
-  out <- rc
-  out$votes <- out$votes[-legs.to.drop,]
+  out <- ideal.output
   out$n <- out$n - n.legs.to.drop
+  out$x <- out$x[-legs.to.drop,]
+  out$xbar <- out$xbar[-legs.to.drop,]
   
   return( out )
 }
