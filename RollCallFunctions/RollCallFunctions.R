@@ -87,10 +87,13 @@ DropIdealLegislator <- function(ideal.output, legs.to.drop) {
   legs.to.drop <- sort(unique(legs.to.drop))
   n.legs.to.drop <- length(legs.to.drop)
   
+  legs.to.keep <- rep(TRUE, ncol(out$x))
+  legs.to.keep[legs.to.drop] <- FALSE
+  
   out <- ideal.output
   out$n <- out$n - n.legs.to.drop
-  out$x <- out$x[-legs.to.drop,]
-  out$xbar <- out$xbar[-legs.to.drop,]
+  out$x <- out$x[,legs.to.keep]
+  out$xbar <- out$xbar[legs.to.keep,]
   
   return( out )
 }
