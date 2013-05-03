@@ -18,6 +18,7 @@
 #'   legislators. Used to remove legislators inserted to force identification.
 #' InitializeIdeals: Given an object of class rollcall(pscl) return good 
 #'   initial estimates for the ideal points and bill parameters
+#' PegMinMax: Rescale so min and max are set values
 #' RollCallEigen: Given a rollcall  object return the relevant eigenvalues.
 
 source("http://www.haptonstahl.org/R/usePackage/usePackage.R")    #' like 'library' except that it first installs the package if necessary
@@ -158,6 +159,11 @@ InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1))
   return( list(ideal.points=scaled.x, bill.params=bill.params) )
 }
 #' res <- InitializeIdeals(rc); res
+
+PegMinMax <- function(x, new.pegs=c(-1,1)) {
+  #' Rescale so min and max are set values
+  return( ChangeIdentification(x, c(which.min(x), which.max(x)), new.pegs) )
+}
 
 RollCallEigen <- function(rc, lop=0.005) {
   #' Given a rollcall  object return the relevant eigenvalues.
