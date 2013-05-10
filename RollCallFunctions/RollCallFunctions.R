@@ -10,7 +10,7 @@
 #'   returns m x m symetric matrix with fraction of votes on which 
 #'   ij^th legislators agree.
 #' ChangeIdentification: Given a vector of ideal points identified with 
-#'   old.pegs, convert to a vector of ideal points identified with new.pegs.
+#'   old.peg.values, convert to a vector of ideal points identified with new.peg.values.
 #' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
 #'   votes, returns m x m symetric matrix with double-centered distances.
 #' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
@@ -53,15 +53,15 @@ AgreementScores <- function(votes) {
   return(out)
 }
 
-ChangeIdentification <- function(x, old.pegs, new.pegs) {
-  #' Given a vector or matrix of 1-d ideal points identified with old.pegs, 
-  #' convert to a vector or matrix of ideal points identified with new.pegs.
+ChangeIdentification <- function(x, old.peg.values, new.peg.values) {
+  #' Given a vector or matrix of 1-d ideal points identified with old.peg.values, 
+  #' convert to a vector or matrix of ideal points identified with new.peg.values.
   #'
   #'  ex: rescaled.ideals <- ChangeIdentification(ideals, c(-1,1), c(-2,2))
   #'
   #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
   #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
-  return( (x - old.pegs[1]) / (old.pegs[2] - old.pegs[1]) * (new.pegs[2] - new.pegs[1]) + new.pegs[1] )
+  return( (x - old.peg.values[1]) / (old.peg.values[2] - old.peg.values[1]) * (new.peg.values[2] - new.peg.values[1]) + new.peg.values[1] )
 }
 
 DoubleCenterSqrdDist <- function(votes) {
@@ -99,6 +99,11 @@ DropIdealLegislator <- function(ideal.output, legs.to.drop) {
   return( out )
 }
   
+IdentifyXNormalized <- function(x, positive.peg=max(x)) {
+  old.peg.values <- c(min(x), positive.peg)
+  new.peg.values <- (old.peg.values - mean(x)) / sd(x)
+  return( ChangeIdentification(x, old.peg.values, new.peg.values) )
+}
 
 InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1)), diag(d)), d=1, lop=.005) {
   #' Given an object of class rollcall(pscl) return good initial 
@@ -160,9 +165,9 @@ InitializeIdeals <- function(rc, anchors, anchor.values=cbind(c(-1, rep(0, d-1))
 }
 #' res <- InitializeIdeals(rc); res
 
-PegMinMax <- function(x, new.pegs=c(-1,1)) {
+PegMinMax <- function(x, new.peg.values=c(-1,1)) {
   #' Rescale so min and max are set values
-  return( ChangeIdentification(x, c(which.min(x), which.max(x)), new.pegs) )
+  return( ChangeIdentification(x, c(min(x), max(x)), new.peg.values) )
 }
 
 RollCallEigen <- function(rc, lop=0.005) {
