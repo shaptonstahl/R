@@ -16,6 +16,10 @@
 #' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
 #'   list of legislator ids return the results having dropped the listed
 #'   legislators. Used to remove legislators inserted to force identification.
+#' IdentifyXNormalized: Given a vector or matrix of 1-d ideal points and some 
+#'   positive.peg.value, convert to a vector or matrix of ideal points 
+#'   identified by positive.peg.value being positive, having mean of zero, and 
+#'   having a standard deviation of 1.
 #' InitializeIdeals: Given an object of class rollcall(pscl) return good 
 #'   initial estimates for the ideal points and bill parameters
 #' PegMinMax: Rescale so min and max are set values
@@ -61,7 +65,8 @@ ChangeIdentification <- function(x, old.peg.values, new.peg.values) {
   #'
   #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
   #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
-  return( (x - old.peg.values[1]) / (old.peg.values[2] - old.peg.values[1]) * (new.peg.values[2] - new.peg.values[1]) + new.peg.values[1] )
+  return( (x - old.peg.values[1]) / (old.peg.values[2] - old.peg.values[1]) * 
+            (new.peg.values[2] - new.peg.values[1]) + new.peg.values[1] )
 }
 
 DoubleCenterSqrdDist <- function(votes) {
@@ -99,8 +104,18 @@ DropIdealLegislator <- function(ideal.output, legs.to.drop) {
   return( out )
 }
   
-IdentifyXNormalized <- function(x, positive.peg=max(x)) {
-  old.peg.values <- c(min(x), positive.peg)
+IdentifyXNormalized <- function(x, positive.peg.value=max(x)) {
+  #' Given a vector or matrix of 1-d ideal points and some positive.peg.value, 
+  #' convert to a vector or matrix of ideal points identified by 
+  #' positive.peg.value being positive, having mean of zero, and having a
+  #' standard deviation of 1.
+  #'
+  #'  ex: rescaled.ideals <- IdentifyXNormalized(ideals)
+  #'  ex: rescaled.ideals <- IdentifyXNormalized(ideals, ideals[27])  # pass the vlaue, not the id
+  #'
+  #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+  #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
+  old.peg.values <- c(min(x), positive.peg.value)
   new.peg.values <- (old.peg.values - mean(x)) / sd(x)
   return( ChangeIdentification(x, old.peg.values, new.peg.values) )
 }
