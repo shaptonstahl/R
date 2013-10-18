@@ -17,7 +17,7 @@ GetNondefaultLoadedPackages <- function() {
 
 fail.counter <- 0
 while( length(pkgs.to.remove <- GetNondefaultLoadedPackages()) > 0 ) {
-  res <- tryCatch( detach(name=paste("package:", pkgs.to.remove[1], sep=""), unload=TRUE, force=TRUE),
+  res <- tryCatch( unloadNamespace(sample(pkgs.to.remove, 1)),
                    error=function(e) e,
                    warning=function(w) w)
   if( !is.null(res) ) fail.counter <- fail.counter + 1
@@ -26,11 +26,11 @@ while( length(pkgs.to.remove <- GetNondefaultLoadedPackages()) > 0 ) {
 
 if(fail.counter >= max.fails) {
   cat("Unable to remove all package environments from the search() path.",
-      "You may want to restart R to guarantee a clean session.\n\n", 
+      "You may want to restart R to guarantee a clean session.\n", 
       sep="\n")
 } else {
   cat("All packages unloaded.\n\n")
+  rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* objects including visible and hidden environments
+  cat("All objects deleted, including hidden package environments.\n")
 }
 
-rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* objects including visible and hidden environments
-cat("All objects deleted, including hidden package environments.\n")
