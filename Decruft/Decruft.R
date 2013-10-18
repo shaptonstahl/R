@@ -17,7 +17,7 @@ GetNondefaultLoadedPackages <- function() {
 
 fail.counter <- 0
 while( length(pkgs.to.remove <- GetNondefaultLoadedPackages()) > 0 ) {
-  res <- tryCatch( detach(name=paste("package:", pkgs.to.remove[1], sep=""), unload=TRUE, force=TRUE,
+  res <- tryCatch( detach(name=paste("package:", pkgs.to.remove[1], sep=""), unload=TRUE, force=TRUE),
                    error=function(e) e,
                    warning=function(w) w)
   if( !is.null(res) ) fail.counter <- fail.counter + 1
