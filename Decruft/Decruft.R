@@ -12,12 +12,12 @@ rm(list=ls(all.names=TRUE, envir=.GlobalEnv), envir=.GlobalEnv)  # clears *all* 
 max.fails <- 500
 
 GetNondefaultLoadedPackages <- function() {
-  setdiff(loadedNamespaces(), c("base", "tools", options()$defaultPackages))
+  setdiff(loadedNamespaces(), c("base", "tools", "grid", "lattice", "tcltk", options()$defaultPackages))
 }
 
 fail.counter <- 0
 while( length(pkgs.to.remove <- GetNondefaultLoadedPackages()) > 0 ) {
-  res <- tryCatch( unloadNamespace(sample(pkgs.to.remove, 1)),
+  res <- tryCatch( detach(name=paste("package:", pkgs.to.remove[1], sep=""), unload=TRUE, force=TRUE,
                    error=function(e) e,
                    warning=function(w) w)
   if( !is.null(res) ) fail.counter <- fail.counter + 1
