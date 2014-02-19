@@ -6,13 +6,13 @@
 # Call with:
 #   source("http://www.haptonstahl.org/R/WhereIsMax/WhereIsMax.R")
 
-WhereIsMax <- function(X) {
+WhereIsMax <- function(X, na.rm=FALSE) {
   # Return indices of maximum entry
   stopifnot(is.matrix(X))
-  linear.index.of.max <- which.max(X)
+  linear.index.of.max <- min(which(X==max(X, na.rm=na.rm)))
   i <- linear.index.of.max %% nrow(X)
   if(i == 0) i <- nrow(X)
-  j <- ceiling(linear.index.of.max / ncol(X))
+  j <- ceiling(linear.index.of.max / nrow(X))
   return(c(i, j))
 }
 
