@@ -8,12 +8,8 @@
 
 WhereIsMax <- function(X, na.rm=FALSE) {
   # Return indices of maximum entry
-  stopifnot(is.matrix(X))
-  linear.index.of.max <- min(which(X==max(X, na.rm=na.rm)))
-  i <- linear.index.of.max %% nrow(X)
-  if(i == 0) i <- nrow(X)
-  j <- ceiling(linear.index.of.max / nrow(X))
-  return(c(i, j))
+  stopifnot(is.array(X))
+  return(which(X==max(X, na.rm=na.rm), arr.ind=TRUE))
 }
 
 # test.X <- matrix(0, nrow=4, ncol=4)
