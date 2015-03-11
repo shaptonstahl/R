@@ -1,7 +1,7 @@
 # WhereIsMax
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Source: https://raw.github.com/shaptonstahl/R
+# Source: https://github.com/shaptonstahl/R
 #
 # Call with:
 #   source("http://www.haptonstahl.org/R/WhereIsMax/WhereIsMax.R")

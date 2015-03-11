@@ -1,4 +1,11 @@
-# draw a violin plot
+# ViolinPlot
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/ViolinPlot/ViolinPlot.R")
+
 
 ViolinPlot <- function(x, 
                        x.center=NA,

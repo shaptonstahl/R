@@ -3,6 +3,13 @@
 # Given a subset of observations (perhaps nodes on a network) suggests which 
 # variables (node attributes) best explain how "these" nodes are different
 # from "those" nodes.
+#
+# Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
+# Source: https://github.com/shaptonstahl/R
+#
+# Call with:
+#   source("http://www.haptonstahl.org/R/WhyMe/WhyMe.R")
+
 
 WhyMe <- function(X, selected) {
   # X = data.frame, so rows are observations and columns are variables

@@ -2,10 +2,10 @@
 # Hack solution
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Source: https://raw.github.com/shaptonstahl/R
+# Source: https://github.com/shaptonstahl/R
 #
 # Call with:
-#   source("http://www.haptonstahl.org/R/football/footballt.R")
+#   source("http://www.haptonstahl.org/R/football/football.R")
 
 football <- function(x, y, r, fdensity=NULL, fcol='blue', nv=10000) {
   # x = vector of circle center x-coordinates

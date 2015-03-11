@@ -1,17 +1,17 @@
-# unfactorColumns
+# UnfactorColumns
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Source: https://raw.github.com/shaptonstahl/R
+# Source: https://github.com/shaptonstahl/R
 #
 # Call with:
-#   source("http://www.haptonstahl.org/R/unfactorColumns/unfactorColumns.R")
+#   source("http://www.haptonstahl.org/R/UnfactorColumns/UnfactorColumns.R")
 
-unfactorColumns <- function(X) {
+UnfactorColumns <- function(X) {
   # Convert columns of a data.frame from factors to a vector that is not a factor.
   # If appropriate, the column is converted to numeric.
   #
   # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/unfactorColumns/unfactorColumns.R")
+  # Load using: source("http://sheer.ucdavis.edu/svn/software/public/UnfactorColumns/UnfactorColumns.R")
 
   if( !is.data.frame(X) ) stop("unfactorColumns requires a data.frame for input")
   

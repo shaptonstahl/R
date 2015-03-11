@@ -1,12 +1,10 @@
 # usePackage
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
-# Source: https://raw.github.com/shaptonstahl/R
+# Source: https://github.com/shaptonstahl/R
 #
 # Call with:
-#   source("http://www.haptonstahl.org/R/usePackage/usePackage.R")
-
-usePackage <- function(package.name) invisible(UsePackage(package.name))
+#   source("http://www.haptonstahl.org/R/UsePackage/UsePackage.R")
 
 UsePackage <- function(package.name) {
   # Given a character string of the name of a package,
