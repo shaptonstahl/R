@@ -11,13 +11,23 @@
 #'   ij^th legislators agree.
 #' ChangeIdentification: Given a vector of ideal points identified with 
 #'   old.peg.values, convert to a vector of ideal points identified with new.peg.values.
+#' CorrelateIdeals(id1, coord1, id2, coord2): Given two vectors of 
+#'   legislator ids and two vectors of ideal points finds matched 
+#'   pairs of ids and provides correlation on those ideal points.
 #' CovotingMatrix: Given chamber and congress download the ORD object from Voteview
 #'   and generate the corresponding covoting matrix.
+#' DifferentLegislator(rc, legislators, n.legislators=2, min.votes=0): 
+#'   Given a set of rollcall votes and a list of legislators (at least 
+#'   length 1) return the legislator with the voting least agreement 
+#'   with those already listed. Uses the taxicab norm (sum across 
+#'   given legislators of the agreement scores)
 #' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
 #'   votes, returns m x m symetric matrix with double-centered distances.
 #' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
 #'   list of legislator ids return the results having dropped the listed
 #'   legislators. Used to remove legislators inserted to force identification.
+#' FilterRollcallVotes(object, keep.votes, drop.votes=NULL): Given a 
+#'   'rollcall' object (package: pscl) either keep or drop some votes
 #' IdentifyXNormalized: Given a vector or matrix of 1-d ideal points and some 
 #'   positive.peg.value, convert to a vector or matrix of ideal points 
 #'   identified by positive.peg.value being positive, having mean of zero, and 
@@ -72,6 +82,17 @@ ChangeIdentification <- function(x, old.peg.values, new.peg.values) {
             (new.peg.values[2] - new.peg.values[1]) + new.peg.values[1] )
 }
 
+CorrelateIdeals <- function(id1, coord1, id2, coord2) {
+  # Given two vectors of legislator ids and two vectors of ideal points
+  # finds matched pairs of ids and provides correlation on those
+  # ideal points.
+  keepers <- intersect(id1, id2)
+  keep1 <- match(keepers, id1)
+  keep2 <- match(keepers, id2)
+  
+  return( cor(coord1[keep1], coord2[keep2]) )
+}
+
 CovotingMatrix <- function(congress,
                            chamber=c("house", "senate"),
                            base.url="ftp://voteview.com/dtaord/") {
@@ -122,6 +143,48 @@ CovotingMatrix <- function(congress,
 }
 # covoting.sen112 <- CovotingMatrix(112, "senate")
 
+DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
+  # Given a set of rollcall votes and a list of legislators (at least
+  # length 1) return the legislator with the voting least agreement
+  # with those already listed. Uses the taxicab norm (sum across 
+  # given legislators of the agreement scores).
+  
+  if(class(rc) != "rollcall") stop("'rc' must be of class 'rollcall'")
+  
+  votes <- rc$votes
+  a.scores <- AgreementScores(votes)
+  if(min.votes > 0) {
+    num.votes.each.legislator <- rowSums(matrix(votes %in% c(rc$codes$yea, rc$codes$nay), nrow=rc$n))
+    legislators.to.exclude <- (num.votes.each.legislator < min.votes)
+    a.scores[legislators.to.exclude,] <- NA
+    a.scores[,legislators.to.exclude] <- NA
+  }
+  
+  if( missing(legislators) ) {
+    # Find two legislators with the largest difference from the others
+    # max.distance.index <- which.max(abs(distances))
+    # legislators <- c(max.distance.index %% nrow(distances), max.distance.index %/% nrow(distances)+1)
+    min.agreement.index <- which.min(abs(a.scores))
+    legislators <- c(min.agreement.index %% nrow(a.scores), min.agreement.index %/% nrow(a.scores)+1)
+    
+    while( length(legislators) < n.legislators) {
+      total.agreement <- rowSums(a.scores[, legislators])
+      total.agreement[legislators] <- NA
+      legislators <- c(legislators, which.min(total.agreement))
+    }
+    
+    return(legislators)
+  } else {
+    total.agreement <- rowSums(a.scores[, legislators])
+    total.agreement[legislators] <- NA
+    return( c(legislators, which.min(total.agreement)) )
+  }
+}
+# library(pscl); rc <- readKH("http://sheer.ucdavis.edu/projects/voteview/dtaord/sen90kh.ord")
+# distances <- DoubleCenterSqrdDist(rc$votes)
+# DifferentLegislator(rc$votes, n=3)
+# DifferentLegislator(rc$votes, n=10)
+
 DoubleCenterSqrdDist <- function(votes) {
   #' Given m x n matrix of m legislators and n roll call votes,
   #' returns m x m symetric matrix with double-centered distances
@@ -155,6 +218,24 @@ DropIdealLegislator <- function(ideal.output, legs.to.drop) {
   out$xbar <- out$xbar[legs.to.keep,]
   
   return( out )
+}
+
+FilterRollcallVotes <- function(object, keep.votes, drop.votes=NULL) {
+  # Given a 'rollcall' object (package: pscl) either keep or drop some votes.
+  if( class(object) != "rollcall" ) stop("'object' must be of class 'rollcall (pscl)'")
+  if( missing(keep.votes) ) {
+    # drop votes
+    if( !is.null(drop.votes) ) {
+      keep.votes <- -1 * drop.votes
+    } else {
+      # do nothing
+      keep.votes <- T
+    }
+  }
+  object$votes <- as.matrix(object$votes[,keep.votes])
+  if( !is.null(object$vote.data) ) object$vote.data <- object$vote.data[keep.votes,]
+  object$m <- ncol(object$votes)
+  return(object)
 }
 
 IdentifyXNormalized <- function(x, positive.peg.value=max(x)) {
