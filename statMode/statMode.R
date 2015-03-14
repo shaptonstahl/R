@@ -6,7 +6,7 @@
 # Call with:
 #   source("http://www.haptonstahl.org/R/statMode/statMode.R")
 
-source("http://www.haptonstahl.org/R/usePackage/usePackage.R")
+source("http://www.haptonstahl.org/R/UsePackage/UsePackage.R")
 usePackage("nnet")
 
 statMode <- function(x, break.ties.randomly=F) {

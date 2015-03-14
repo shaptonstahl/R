@@ -7,8 +7,6 @@
 #' Call with:
 #'   source("http://www.haptonstahl.org/R/CreateInteractionTerms/CreateInteractionTerms.R")
 
-
-library("combinat")
 library("plyr")
 
 CreateInteractionTerms <- function(X, degree=2) {

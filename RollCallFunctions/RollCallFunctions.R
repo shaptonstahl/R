@@ -21,6 +21,8 @@
 #'   length 1) return the legislator with the voting least agreement 
 #'   with those already listed. Uses the taxicab norm (sum across 
 #'   given legislators of the agreement scores)
+#' DimensionsInVotes: Given a rollcall object uses Horn's (1965) method of
+#'   Parallel Analysis to computer the number of dimensions
 #' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
 #'   votes, returns m x m symetric matrix with double-centered distances.
 #' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
@@ -37,7 +39,7 @@
 #' PegMinMax: Rescale so min and max are set values
 #' RollCallEigen: Given a rollcall  object return the relevant eigenvalues.
 
-source("http://www.haptonstahl.org/R/usePackage/usePackage.R")    #' like 'library' except that it first installs the package if necessary
+source("http://www.haptonstahl.org/R/UsePackage/UsePackage.R")    #' like 'library' except that it first installs the package if necessary
 UsePackage("pscl")
 UsePackage("RCurl")
 
@@ -185,6 +187,28 @@ DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
 # DifferentLegislator(rc$votes, n=3)
 # DifferentLegislator(rc$votes, n=10)
 
+DimensionsInVotes <- function(rc, lop=.005, n.sims=100, show.progress=TRUE) {
+  #' Given a rollcall object uses Horn's (1965) method of Parallel Analysis
+  #' to computer the number of dimensions
+  purged.rc <- dropRollCall(rc, dropList=list(lop=ceiling(rc$n * lop)))
+  
+  if(show.progress) { 
+    f <- pbreplicate 
+  } else {
+    f <- replicate
+  }
+  simulated.eigenvalues <- f(n.sims, {
+    sim.votes <- matrix(sample(0:1, purged.rc$m*purged.rc$n, replace=TRUE), ncol=purged.rc$m)
+    eigen(DoubleCenterSqrdDist(sim.votes))$values
+  })
+  mean.eigenvalues <- rowMeans(simulated.eigenvalues)
+  observed.eigenvalues <- RollCallEigen(rc, lop=lop)
+  adjusted.eigenvalues <- observed.eigenvalues - (mean.eigenvalues - 1)
+  return( list(n.dim=min(which(adjusted.eigenvalues < 1)) - 1, 
+               adj.ev=adjusted.eigenvalues,
+               obs.ev=observed.eigenvalues) )
+}
+
 DoubleCenterSqrdDist <- function(votes) {
   #' Given m x n matrix of m legislators and n roll call votes,
   #' returns m x m symetric matrix with double-centered distances
@@ -325,5 +349,6 @@ RollCallEigen <- function(rc, lop=0.005) {
   #' Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
   #' source("http://www.haptonstahl.org/R/RollCallFunctions/RollCallFunctions.R")
   purged.rc <- dropRollCall(rc, dropList=list(lop=ceiling(rc$n * lop)))
-  eigen(DoubleCenterSqrdDist(purged.rc$votes))$values
+  if(is.null(purged.rc$m)) return(rep(NA, rc$n))
+  else return(eigen(DoubleCenterSqrdDist(purged.rc$votes))$values)
 }

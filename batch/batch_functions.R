@@ -12,7 +12,7 @@
 
 source("http://sheer.ucdavis.edu/svn/software/public/postObjects/postObjects.R")
 source("http://sheer.ucdavis.edu/svn/software/public/Prompts/Prompts.R")
-source("http://sheer.ucdavis.edu/svn/software/public/usePackage/usePackage.R")    # like 'library' except that it first installs the package if necessary
+source("http://sheer.ucdavis.edu/svn/software/public/UsePackage/UsePackage.R")    # like 'library' except that it first installs the package if necessary
 if( !UsePackage("RCurl") ) stop("Minion requires the RCurl package")
 
 GenerateWorkunitControl <- function(params) {
