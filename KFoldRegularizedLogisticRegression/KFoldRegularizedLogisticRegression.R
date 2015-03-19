@@ -19,6 +19,7 @@
 #'   PlotRegularizationParameters(res)
 
 RegularizedLogisticRegression <- function(X, y, lambda) {
+  X <- as.matrix(X)
   X <- cbind(1, X)
   m <- nrow(X)
   length.theta <- ncol(X)
@@ -42,6 +43,8 @@ KFoldRegularizedLogisticRegression <- function(X, y, folds=5, lambdas=3^c(-5:5))
   #' Given a dataset and the number of folds returns the error for each 
   #' value of lambda, the lambda that has the least error, and the value of theta
   #' corresponding to using the entire training set with the optima value of lambda 
+  
+  X <- as.matrix(X)
   
   Error <- function(Xcv, ycv, theta) {
     Xcv <- cbind(1, Xcv)
