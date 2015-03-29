@@ -42,6 +42,7 @@
 source("http://www.haptonstahl.org/R/UsePackage/UsePackage.R")    #' like 'library' except that it first installs the package if necessary
 UsePackage("pscl")
 UsePackage("RCurl")
+UsePackage('pbapply')
 
 AgreementScores <- function(votes) {
   #' Given m x n matrix of m legislators and n roll call votes,
