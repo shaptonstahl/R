@@ -9,7 +9,7 @@
 
 library("plyr")
 
-CreateInteractionTerms <- function(X, degree=2) {
+CreateInteractionTerms <- function(X, degree=2, remove.zero.variance=TRUE) {
   #' create lsit of columns for expand.grid with values of the degrees needed
   columns <- lapply(1:ncol(X), function(i) 0:degree)
   names(columns) <- names(X)
@@ -30,6 +30,9 @@ CreateInteractionTerms <- function(X, degree=2) {
   colnames(out) <- sapply(1:nrow(keep), function(i) 
     paste(sapply(1:ncol(keep), function(j) 
       paste(names(X)[j], keep[i,j], sep='')), collapse='.'))
+  if(remove.zero.variance) {
+    out <- out[,(apply(out, 2, sd) > 0)]
+  }
   return(as.data.frame(out))
 }
 #' X.test <- data.frame(a=1:3, b=2:4)
