@@ -32,10 +32,11 @@ RegularizedLogisticRegression <- function(X, y, lambda) {
     as.vector(t(X) %*% (plogis(X %*% theta) - y) / m +
       c(0, rep(1, length.theta - 1)) * lambda * theta / m)
   }
-  res <- optim(par=rnorm(length.theta),
-               Cost,
-               CostGradient,
-               method="BFGS")
+  res <- tryCatch(optim(par=rnorm(length.theta), Cost, CostGradient, method="BFGS"),
+                  error=function(e) {
+                    warning('error in optimization')
+                    return(list(par=NA))
+                  })
   return(res$par)
 }
 
@@ -47,9 +48,10 @@ KFoldRegularizedLogisticRegression <- function(X, y, folds=5, lambdas=3^c(-5:5))
   X <- as.matrix(X)
   
   Error <- function(Xcv, ycv, theta) {
+    if(identical(NA, theta)) return(NA)
     Xcv <- cbind(1, Xcv)
-    - sum(ycv * log(plogis(Xcv %*% theta)) + 
-            (1-ycv) * log(1 - plogis(Xcv %*% theta))) / nrow(Xcv)
+    return(- sum(ycv * log(plogis(Xcv %*% theta)) + 
+            (1-ycv) * log(1 - plogis(Xcv %*% theta))) / nrow(Xcv))
   }
   
   suppressWarnings( test.set.rows <- split(sample(1:nrow(X), nrow(X)), f=1:folds) )
@@ -66,6 +68,7 @@ KFoldRegularizedLogisticRegression <- function(X, y, folds=5, lambdas=3^c(-5:5))
   })
   best.lambda <- lambdas[which.min(errors)]
   best.theta <- RegularizedLogisticRegression(X, y, best.lambda)
+  if(any(is.na(errors))) warning("optimization error running some regressions")
   return(list(errors=errors,
               lambdas=lambdas,
               best.lambda=best.lambda,
