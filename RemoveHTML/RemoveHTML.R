@@ -13,6 +13,7 @@ RemoveHTML <- function(x) {
   out <- gsub("<.*?>", "", x)
   #' convert HTML entities
   out <- sapply(out, function(this) {
+    if('' == this) return('')
     xpathApply(htmlParse(paste('<html>', this, '</html>', sep=''), 
                          asText=TRUE),
                "//body//text()", xmlValue)[[1]]
