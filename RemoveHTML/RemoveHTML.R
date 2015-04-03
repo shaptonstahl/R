@@ -7,10 +7,11 @@
 #'   source("http://www.haptonstahl.org/R/RemoveHTML/RemoveHTML.R")
 
 library("XML")
+library('stringr')
 
 RemoveHTML <- function(x) {
   #' remove HTML
-  out <- gsub("<.*?>", "", x)
+  out <- str_trim(gsub("<.*?>", "", x))
   #' convert HTML entities
   out <- sapply(out, function(this) {
     if('' == this) return('')
