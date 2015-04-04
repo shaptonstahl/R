@@ -20,7 +20,8 @@ RoundNicely <- function(x, down=FALSE) {
       if(mantissa < 1.25) mantissa <- 1
       else mantissa <- floor(2 * mantissa) / 2
     } else {
-      if(mantissa < 1.25) mantissa <- 1.25
+      if(mantissa == 1) mantissa <- 1
+      else if(mantissa < 1.25) mantissa <- 1.25
       else mantissa <- ceiling(2 * mantissa) / 2
     }
     return(sign(x) * mantissa * 10^expOnTen)
