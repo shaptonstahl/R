@@ -188,11 +188,11 @@ DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
 # DifferentLegislator(rc$votes, n=3)
 # DifferentLegislator(rc$votes, n=10)
 
-DimensionsInVotes <- function(rc, lop=.005, n.sims=100, show.progress=TRUE) {
+DimensionsInVotes <- function(rc, min.votes=5, lop=.005, n.sims=100, show.progress=TRUE) {
   #' Given a rollcall object uses Horn's (1965) method of Parallel Analysis
   #' to computer the number of dimensions
   purged.rc <- dropRollCall(rc, dropList=list(lop=ceiling(rc$n * lop)))
-  
+  if( is.null(purged.rc$m) || purged.rc$m < min.votes ) return(NA)  
   if(show.progress) { 
     f <- pbreplicate 
   } else {
