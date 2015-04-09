@@ -18,7 +18,7 @@
 #'   res <- KFoldRegularizedLogisticRegression(X, y)
 #'   PlotRegularizationParameters(res)
 
-RegularizedLogisticRegression <- function(X, y, lambda) {
+RegularizedLogisticRegression <- function(X, y, lambda, max.tries=10) {
   X <- as.matrix(X)
   X <- cbind(1, X)
   m <- nrow(X)
@@ -33,14 +33,22 @@ RegularizedLogisticRegression <- function(X, y, lambda) {
       c(0, rep(1, length.theta - 1)) * lambda * theta / m)
   }
   res <- tryCatch(optim(par=rnorm(length.theta), Cost, CostGradient, method="BFGS"),
-                  error=function(e) {
-                    warning('error in optimization')
-                    return(list(par=NA))
-                  })
+                  error=function(e) list(par=NA))
+  n.tries <- 1
+  while(identical(NA, res$par)) {
+    if(n.tries >= max.tries) break     
+    res <- tryCatch(optim(par=rnorm(length.theta), Cost, CostGradient, method="BFGS"),
+                    error=function(e) list(par=NA))
+    n.tries <- n.tries + 1
+  }
+  if(identical(NA, res$par)) warning('Unable to complete optimization')
   return(res$par)
 }
 
-KFoldRegularizedLogisticRegression <- function(X, y, folds=5, lambdas=3^c(-5:5)) {
+KFoldRegularizedLogisticRegression <- function(X, y, 
+                                               folds=5, 
+                                               lambdas=3^c(-5:5),
+                                               max.tries=10) {
   #' Given a dataset and the number of folds returns the error for each 
   #' value of lambda, the lambda that has the least error, and the value of theta
   #' corresponding to using the entire training set with the optima value of lambda 
@@ -62,7 +70,7 @@ KFoldRegularizedLogisticRegression <- function(X, y, folds=5, lambdas=3^c(-5:5))
       ytest <- y[-test.set.rows[[fold]]]
       Xcv <- X[test.set.rows[[fold]],]
       ycv <- y[test.set.rows[[fold]]]
-      theta <- RegularizedLogisticRegression(Xtest, ytest, lambda)
+      theta <- RegularizedLogisticRegression(Xtest, ytest, lambda, max.tries)
       return(Error(Xcv, ycv, theta))
     }))
   })
