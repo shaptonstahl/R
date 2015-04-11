@@ -22,7 +22,7 @@
 #'   with those already listed. Uses the taxicab norm (sum across 
 #'   given legislators of the agreement scores)
 #' DimensionsInVotes: Given a rollcall object uses Horn's (1965) method of
-#'   Parallel Analysis to computer the number of dimensions
+#'   Parallel Analysis to compute the number of dimensions
 #' DoubleCenterSqrdDist: Given m x n matrix of m legislators and n roll call 
 #'   votes, returns m x m symetric matrix with double-centered distances.
 #' DropIdealLegislator: Given the results of a call to 'pscl::ideal' and a 
