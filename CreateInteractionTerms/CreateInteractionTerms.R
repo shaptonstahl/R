@@ -6,11 +6,22 @@
 #'
 #' Call with:
 #'   source("http://www.haptonstahl.org/R/CreateInteractionTerms/CreateInteractionTerms.R")
+#'   
+#'   Provides:
+#'   - CreateInteractionTerms
+#'   - ExtractInteractionExponents
 
 library("plyr")
 
 CreateInteractionTerms <- function(X, degree=2, remove.zero.variance=TRUE) {
-  #' create lsit of columns for expand.grid with values of the degrees needed
+  #' Given a data.frame with numeric entries create a data frame with
+  #' columns representing every element-wise product of columns up to degree
+  #' at a time.
+  
+  #' warn if there are numbers in the column names
+  if(any(grepl('[0-9]', names(X)))) warning('You have numbers in the column names. You will not be able to automatically extract the exponents after the fact using ExtractInteractionExponents')
+  
+  #' create list of columns for expand.grid with values of the degrees needed
   columns <- lapply(1:ncol(X), function(i) 0:degree)
   names(columns) <- names(X)
   #' create all combinations including those of too high degree
@@ -39,3 +50,34 @@ CreateInteractionTerms <- function(X, degree=2, remove.zero.variance=TRUE) {
 #' CreateInteractionTerms(X.test)
 #' CreateInteractionTerms(X.test, degree=3)
 #' CreateInteractionTerms(X.test, degree=5)
+
+ExtractInteractionExponents <- function(x) {
+  #' Given a vector of column names resulting from CreateInteractionTerms
+  #' return a data.frame where the columns are the constituent variables,
+  #' the rows are the columns of the interaction term set, and the values
+  #' are the exponents.
+  
+  var.names <- strsplit(x[1], '[0-9]+\\.')[[1]] # last will have number still attached
+  n.vars <- length(var.names)
+  var.names[n.vars] <- sub('[0-9]+$', '', var.names[n.vars])
+  
+  x <- substring(x, nchar(var.names[1]) + 1)
+  exponent.nchar <- regexpr('[^0-9]', x) - 1
+  out <- data.frame(as.numeric(substring(x, 1, exponent.nchar)))
+  if(length(var.names) > 1) {
+    for(var.name in var.names[2:n.vars]) {
+      x <- substring(x, exponent.nchar + nchar(var.name) + 2)
+      if(var.name == var.names[n.vars]) {
+        out <- cbind(out, as.numeric(x))
+      } else {
+        exponent.nchar <- regexpr('[^0-9]', x) - 1
+        out <- cbind(out, as.numeric(substring(x, 1, exponent.nchar)))
+      }
+    }
+  }
+  names(out) <- var.names
+  return(out)
+}
+#' X.test <- data.frame(a=1:3, b=2:4)
+#' inter.test <- CreateInteractionTerms(X.test)
+#' ExtractInteractionExponents(inter.test)
