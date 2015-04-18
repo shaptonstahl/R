@@ -183,10 +183,9 @@ DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
     return( c(legislators, which.min(total.agreement)) )
   }
 }
-# library(pscl); rc <- readKH("http://sheer.ucdavis.edu/projects/voteview/dtaord/sen90kh.ord")
-# distances <- DoubleCenterSqrdDist(rc$votes)
-# DifferentLegislator(rc$votes, n=3)
-# DifferentLegislator(rc$votes, n=10)
+# library(pscl); rc <- readKH("ftp://voteview.com/dtaord/SEN90KH.ORD")
+# DifferentLegislator(rc, n=3)
+# DifferentLegislator(rc, n=10)
 
 DimensionsInVotes <- function(rc, min.votes=5, lop=.005, n.sims=100, show.progress=TRUE) {
   #' Given a rollcall object uses Horn's (1965) method of Parallel Analysis
