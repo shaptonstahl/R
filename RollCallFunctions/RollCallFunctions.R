@@ -43,6 +43,7 @@ source("http://www.haptonstahl.org/R/UsePackage/UsePackage.R")    #' like 'libra
 UsePackage("pscl")
 UsePackage("RCurl")
 UsePackage('pbapply')
+UsePackage('paran')
 
 AgreementScores <- function(votes) {
   #' Given m x n matrix of m legislators and n roll call votes,
@@ -187,26 +188,31 @@ DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
 # DifferentLegislator(rc, n=3)
 # DifferentLegislator(rc, n=10)
 
-DimensionsInVotes <- function(rc, min.votes=5, lop=.005, n.sims=100, show.progress=TRUE) {
+DimensionsInVotes <- function(rc, min.votes=5, lop=.005, n.sims=30, show.progress=TRUE) {
   #' Given a rollcall object uses Horn's (1965) method of Parallel Analysis
   #' to computer the number of dimensions
   purged.rc <- dropRollCall(rc, dropList=list(lop=ceiling(rc$n * lop)))
-  if( is.null(purged.rc$m) || purged.rc$m < min.votes ) return(NA)  
-  if(show.progress) { 
-    f <- pbreplicate 
-  } else {
-    f <- replicate
-  }
-  simulated.eigenvalues <- f(n.sims, {
-    sim.votes <- matrix(sample(0:1, purged.rc$m*purged.rc$n, replace=TRUE), ncol=purged.rc$m)
-    eigen(DoubleCenterSqrdDist(sim.votes))$values
-  })
-  mean.eigenvalues <- rowMeans(simulated.eigenvalues)
-  observed.eigenvalues <- RollCallEigen(rc, lop=lop)
-  adjusted.eigenvalues <- observed.eigenvalues - (mean.eigenvalues - 1)
-  return( list(n.dim=min(which(adjusted.eigenvalues < 1)) - 1, 
-               adj.ev=adjusted.eigenvalues,
-               obs.ev=observed.eigenvalues) )
+  if( is.null(purged.rc$m) || purged.rc$m < min.votes ) return(NA)
+  
+#  if(show.progress) { 
+#    f <- pbreplicate 
+#  } else {
+#    f <- replicate
+#  }
+#  simulated.eigenvalues <- f(n.sims, {
+#    sim.votes <- matrix(sample(0:1, purged.rc$m*purged.rc$n, replace=TRUE), ncol=purged.rc$m)
+#    eigen(DoubleCenterSqrdDist(sim.votes))$values
+#  })
+#  mean.eigenvalues <- rowMeans(simulated.eigenvalues)
+#  observed.eigenvalues <- RollCallEigen(rc, lop=lop)
+#  adjusted.eigenvalues <- observed.eigenvalues - (mean.eigenvalues - 1)
+#  return( list(n.dim=min(which(adjusted.eigenvalues < 1)) - 1, 
+#               adj.ev=adjusted.eigenvalues,
+#               obs.ev=observed.eigenvalues) )
+  res <- paran(purged.rc$votes, iterations=n.sims, status=show.progress)
+  return( list(n.dim=res$Retained,
+               adj.ev=res$AdjEv,
+               obs.ev=res$Ev) )
 }
 
 DoubleCenterSqrdDist <- function(votes) {
