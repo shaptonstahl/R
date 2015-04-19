@@ -172,7 +172,7 @@ DifferentLegislator <- function(rc, legislators, n.legislators=2, min.votes=0) {
     legislators <- c(min.agreement.index %% nrow(a.scores), min.agreement.index %/% nrow(a.scores)+1)
     
     while( length(legislators) < n.legislators) {
-      total.agreement <- rowSums(a.scores[, legislators])
+      total.agreement <- rowSums(a.scores[, legislators, drop=FALSE])
       total.agreement[legislators] <- NA
       legislators <- c(legislators, which.min(total.agreement))
     }
