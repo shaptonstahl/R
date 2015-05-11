@@ -42,7 +42,7 @@ CreateInteractionTerms <- function(X, degree=2, remove.zero.variance=TRUE) {
     paste(sapply(1:ncol(keep), function(j) 
       paste(names(X)[j], keep[i,j], sep='')), collapse='.'))
   if(remove.zero.variance) {
-    out <- out[,(apply(out, 2, sd) > 0)]
+    out <- out[,(apply(out, 2, sd, na.rm=TRUE) > 0)]
   }
   return(as.data.frame(out))
 }
