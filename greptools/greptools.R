@@ -1,4 +1,4 @@
-# c
+# tools to make grep in R easier to use
 #
 # Author: Stephen R. Haptonstahl (srh@haptonstahl.org)
 # Source: https://github.com/shaptonstahl/R
