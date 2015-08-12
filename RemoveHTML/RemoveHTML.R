@@ -14,6 +14,7 @@ RemoveHTML <- function(x) {
   out <- str_trim(gsub("<.*?>", "", x))
   #' convert HTML entities
   out <- sapply(out, function(this) {
+    if(is.na(this)) return(NA)
     if('' == this) return('')
     xpathApply(htmlParse(paste('<html>', this, '</html>', sep=''), 
                          asText=TRUE),
