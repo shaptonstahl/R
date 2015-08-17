@@ -80,4 +80,4 @@ ExtractInteractionExponents <- function(x) {
 }
 #' X.test <- data.frame(a=1:3, b=2:4)
 #' inter.test <- CreateInteractionTerms(X.test)
-#' ExtractInteractionExponents(inter.test)
+#' ExtractInteractionExponents(names(inter.test))
