@@ -8,12 +8,12 @@
 #' 
 #' Ref: http://www.milefoot.com/math/stat/ci-medians.htm
 
-MedianConfidenceInterval <- function(x, conf=.95, round="down") {
+MedianConfidenceInterval <- function(x, conf=.95) {
   #' Given a set of numbers x return a confidence interval for the median
-  QuantileConfidenceInterval(x, quantile=.5, conf=conf, round=round)
+  QuantileConfidenceInterval(x, p=.5, conf=conf)
 }
 
-QuantileConfidenceInterval <- function(x, p=.5, conf=.95, round="down") {
+QuantileConfidenceInterval <- function(x, p=.5, conf=.95) {
   #' Given a set of numbers x and a quantile p return a confidence interval
   #' for that quantile
   stopifnot(is.numeric(x))
@@ -47,3 +47,8 @@ QuantileConfidenceInterval <- function(x, p=.5, conf=.95, round="down") {
   }
   return(list(lower=lower, upper=upper, conf=resulting.conf))
 }
+
+#' Examples from the reference:
+#' x <- c(24, 38, 61, 22, 16, 57, 31, 29, 35)
+#' MedianConfidenceInterval(x, conf=.8)
+#' QuantileConfidenceInterval(x, p=.75, conf=.8)
