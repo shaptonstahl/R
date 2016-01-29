@@ -4,7 +4,7 @@
 #' Source: https://github.com/shaptonstahl/R
 #'
 #' Call with:
-#'   source("http://www.haptonstahl.org/R/RoundBoundsNicely/RoundBoundsNicely.R")
+#'   source("http://www.haptonstahl.org/R/MedianConfidenceInterval/MedianConfidenceInterval.R")
 #' 
 #' Ref: http://www.milefoot.com/math/stat/ci-medians.htm
 
